@@ -9,14 +9,17 @@ export default createGlobalStyle`
   }
   
   body {
+    width: 100vw;
+    height: 100vh;
+
     font-size: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    background: #6190e8; /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #6190e8, #a7bfe8); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #6190e8, #a7bfe8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
+    background: #f12711;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #f5af19, #f12711);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #f5af19, #f12711); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   }
 
   button {

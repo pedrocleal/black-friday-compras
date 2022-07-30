@@ -1,28 +1,13 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  margin: 52px auto;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-
-  h1 {
-    font-weight: bold;
-  }
-
-  p {
-    font-size: 18px;
-  }
-`
-
 export const ActionsContainer = styled.div`
+  margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 125px;
 
   a {
+    text-align: center;
     background: #ddd;
     color: #000;
     font-weight: bold;
@@ -31,6 +16,7 @@ export const ActionsContainer = styled.div`
     justify-content: center;
     margin: 0px 12px;
     height: 200px;
+    width: 200px;
     padding: 52px;
     border-radius: 12px;
     transition: all 0.2s ease-in-out;
@@ -41,7 +27,7 @@ export const ActionsContainer = styled.div`
   }
 
   hr {
-    width: 150px;
+    width: 20px;
     transform: rotate(90deg)
   }
 `

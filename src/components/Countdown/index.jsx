@@ -1,10 +1,22 @@
 import { Container } from "./styles"
 
 export function Countdown() {
+
+  function getDaysUntilBlackFriday() {
+    const blackFridayDate = new Date('Nov 25, 2022 00:00:00').getTime();
+    const now = new Date().getTime();
+    const distance = blackFridayDate - now
+
+    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+    return days;
+  }
+
+  getDaysUntilBlackFriday();
+
   return (
     <Container>
-      <h3>Contagem regressiva para a black...</h3>
-      <span>2 DIAS 3 NOITES 8 MILENIOS</span>
+      <span>Faltam <strong>{getDaysUntilBlackFriday()}</strong> dias para a black friday!</span>
     </Container>
   )
 }

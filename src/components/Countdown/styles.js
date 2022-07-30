@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  position: absolute;
+  margin-top: 52px;
   bottom: 10px;
   margin-bottom: 24px;
 
@@ -12,6 +12,11 @@ export const Container = styled.div`
 
   span {
     margin-top: 8px;
-    color: red;
+    color: ${({ theme }) => theme.textColor};
+
+    strong {
+      color: ${({ theme }) => theme.secondary};
+      font-weight: 900;
+    }
   }
 `
