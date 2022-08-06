@@ -34,5 +34,6 @@ export const Form = styled.form`
     color: #fff;
     font-family: 'Inter', sans-serif;
     font-weight: 500;
+    outline: none;
   }
 `
