@@ -8,21 +8,25 @@ export const ActionsContainer = styled.div`
 
   a {
     text-align: center;
-    background: #ddd;
-    color: #000;
-    font-weight: bold;
+    color: #d3d3d3;
+    font-weight: 700;
+    font-size: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0px 12px;
     height: 200px;
-    width: 200px;
+    width: 250px;
     padding: 52px;
     border-radius: 12px;
     transition: all 0.2s ease-in-out;
+    background: ${({ theme }) => theme.secondary};
+    border-radius: 12px;
+    border: 1px solid #fafafa;
     
     &:hover {
-      transform: scale(1.05)
+      background: #FBBF24;
+      color: #1e1e1e;
     }
   }
 

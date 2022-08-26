@@ -13,7 +13,9 @@ export const Container = styled.div`
   width: 100%;
   height: 100%;
 
-  background: #1B1A17;
+  background: ${({ theme }) => theme.background};
+  border: 1px solid rgba(255, 255, 255, 0.125);
+
   border-radius: 24px;
   box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
 `
@@ -30,9 +32,9 @@ export const Header = styled.div`
   padding: 0 24px;
 
   h1 {
-    font-weight: 900;
+    font-weight: bold;
     font-size: 32px;
-    color: ${({ theme }) => theme.primary};
+    color: #fff;
   }
 
   p {

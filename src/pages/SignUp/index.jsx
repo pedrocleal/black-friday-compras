@@ -7,7 +7,6 @@ import { useState } from "react";
 import useErrors from "../../hooks/useErrors";
 
 export function SignUp() {
-
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

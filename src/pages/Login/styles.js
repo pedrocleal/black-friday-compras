@@ -7,7 +7,7 @@ export const Container = styled.div`
     color: ${({ theme }) => theme.textColor};
 
     a {
-      color: ${({ theme }) => theme.primary};
+      color: ${({ theme }) => theme.secondary};
       font-weight: bold;
     }
   }
@@ -16,23 +16,26 @@ export const Container = styled.div`
 export const Form = styled.form`
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   
   flex-direction: column;
   
   h4 {
-    color: ${({ theme }) => theme.textColor};
-    margin-bottom: 24px;
+    color: ${({ theme }) => theme.primary};
+    margin-bottom: 16px;
+    font-weight: 900;
   }
 
   button {
     width: 100%;
-    padding: 6px;
+    padding: 8px 12px;
     border-radius: 4px;
-    border: 1px solid #60FE00;
-    background: #60FE00;
+    border: 1px solid #30A451;
+    background: #30A451;
     color: #fff;
     font-family: 'Inter', sans-serif;
-    font-weight: 500;
+    font-weight: 700;
+    font-size: 16px;
+    outline: none;
   }
 `
