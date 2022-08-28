@@ -39,5 +39,12 @@ export const Form = styled.form`
     font-weight: 700;
     font-size: 16px;
     outline: none;
+    transition: all 0.3s ease-in;
+
+    &:disabled {
+      background: #d3d3d3;
+      border: 1px solid #fff;
+      cursor: default;
+    }
   }
 `

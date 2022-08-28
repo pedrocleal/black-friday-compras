@@ -14,7 +14,7 @@ export default createGlobalStyle`
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #fafafa;
+    background: #111927;
   }
 
   button {

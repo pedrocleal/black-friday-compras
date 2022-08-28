@@ -1,77 +1,158 @@
-import { Form } from "./styles";
-import Input from "../../components/Input";
-import { Link } from 'react-router-dom';
-import { Container } from './styles'
-import { FormGroup } from '../../components/FormGroup'
-import { useState } from "react";
-import useErrors from "../../hooks/useErrors";
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { Form, Container } from './styles';
+
+import Input from '../../components/Input';
+import { FormGroup } from '../../components/FormGroup';
+
+import useErrors from '../../hooks/useErrors';
+import { errorHandler } from '../../errors/errorHandler';
+import toast, { Toaster } from 'react-hot-toast';
+
+import { createUserWithEmailAndPassword } from "firebase/auth"
+import { auth, db } from '../../firebase/firebase-config'
+import { collection, addDoc } from 'firebase/firestore'
 
 export function SignUp() {
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const { errors, setError, removeError, getErrorMessageByFieldName } = useErrors(); 
+  const userCollectionRef = collection(db, "users");
+  const navigate = useNavigate();
 
+  const {
+    errors, setError, removeError, getErrorMessageByFieldName,
+  } = useErrors();
+  
+  const isButtonValid = errors.length === 0 && username && email && password && confirmPassword;
+  
   function handleUsernameInputChange(e) {
+    setUsername(e.target.value);
     if (!e.target.value) {
-      return setError({ field: 'name', message: 'Nome é obrigatório'})
+      setError({ field: 'name', message: 'Nome é obrigatório' });
+    } else {
+      removeError('name');
     }
-    removeError('name')
-    setUsername(e.target.value)
   }
 
   function handleEmailInputChange(e) {
+    setEmail(e.target.value);
     if (!e.target.value) {
-      console.log('Email é obrigatório')
+      setError({ field: 'email', message: 'Email é obrigatório' });
+    } else {
+      removeError('email');
+    }
+  }
+
+  async function createNewUser() {
+    try {
+      const request = await addDoc(userCollectionRef, { 
+        username: username,
+        email: email,
+        password: password,
+      })
+
+      console.log(request)
+    } catch(error) {
+      console.log(error.response.data.message)
+    }
+  }
+
+  async function signUp() {
+    try {
+      const user = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
+      console.log(user);
+      await createNewUser();
+      toast.success('Cadastro efetuado com sucesso!');
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
+    } catch (error) {
+      toast.error(errorHandler(error.code))
+    }
+  }
+
+  function handleFormSubmit(e) {
+    e.preventDefault();
+    
+    // form validation
+    if (password !== confirmPassword) {
+      return toast.error('As senhas não coincidem!')
     }
 
-    setEmail(e.target.value)
+    if (password.length < 6) {
+      return toast.error('A sua senha precisa ter no mínimo 6 caracteres')
+    }
+
+    signUp();
   }
+
+  console.log(isButtonValid)
 
   return (
     <Container>
-      <Form onSubmit={(e) => handleFormSubmit(e)}>
+
+      <Toaster />
+
+      <Form onSubmit={handleFormSubmit}>
         <h4>Cadastro</h4>
 
         <FormGroup error={getErrorMessageByFieldName('name')}>
           <Input
-            onChange={(e) => handleUsernameInputChange(e)} 
-            type='text'
-            placeholder='Nome de usuário'
+            onChange={(e) => handleUsernameInputChange(e)}
+            type="text"
+            placeholder="Nome de usuário"
+            value={username}
+          />
+        </FormGroup>
+
+        <FormGroup error={getErrorMessageByFieldName('email')}>
+          <Input
+            onChange={(e) => handleEmailInputChange(e)}
+            type="text"
+            placeholder="Email"
+            value={email}
           />
         </FormGroup>
 
         <FormGroup>
           <Input
-            onChange={(e) => handleEmailInputChange(e)} 
-            type='text'
-            placeholder='Email'
+            type="password"
+            placeholder="Senha"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </FormGroup>
 
         <FormGroup>
-          <Input 
-            type='password'
-            placeholder='Senha'
+          <Input
+            type="password"
+            placeholder="Repetir senha"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </FormGroup>
 
-        <FormGroup>
-          <Input 
-            type='password'
-            placeholder='Repetir senha'
-          />
-        </FormGroup>
-
-        <button 
+        <button
           type="submit"
+          disabled={isButtonValid ? false : true}
         >
           Cadastrar
         </button>
       </Form>
 
-      <p>Já possui conta? Faça o <Link to='/login'>login</Link></p>
+      <p>
+        Já possui conta? Faça o
+        {' '}
+        <Link to="/login">login</Link>
+      </p>
     </Container>
-  )
+  );
 }

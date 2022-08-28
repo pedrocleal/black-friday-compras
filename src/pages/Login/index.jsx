@@ -1,18 +1,20 @@
+import { useState } from 'react';
 import { Container, Form } from './styles';
 import Input from '../../components/Input';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FormGroup } from '../../components/FormGroup'
 
+import { createUserWithEmailAndPassword } from "firebase/auth"
+
 export function Login() {
 
-  const [ input, setInput ] = useState('')
+  const [ username, setUsername ] = useState('')
   const [ password, setPassword ] = useState('')
 
-  function handleFormSubmit(e) {
+  function login(e) {
     e.preventDefault();
 
-    console.log({ input, password })
+    console.log({ username, password })
   }
 
   return (
@@ -22,8 +24,8 @@ export function Login() {
         
         <FormGroup>
           <Input 
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             type='text'
             placeholder='Email'
           />
