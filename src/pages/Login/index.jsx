@@ -1,25 +1,54 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Container, Form } from './styles';
 import Input from '../../components/Input';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FormGroup } from '../../components/FormGroup'
 
-import { createUserWithEmailAndPassword } from "firebase/auth"
+import { signInWithEmailAndPassword } from "firebase/auth"
+import { auth } from '../../firebase/firebase-config';
+
+import { AuthContext } from '../../contexts/AuthContext';
+import { useEffect } from 'react';
 
 export function Login() {
 
   const [ username, setUsername ] = useState('')
   const [ password, setPassword ] = useState('')
 
-  function login(e) {
-    e.preventDefault();
+  const isButtonValid = username && password;
 
-    console.log({ username, password })
+  const { isAuth, currentUser, setCurrentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuth) {
+      navigate("/")
+    }
+  }, [])
+
+  async function login() {
+    try {
+      const response = await signInWithEmailAndPassword(
+        auth,
+        username,
+        password
+      );
+
+      setCurrentUser(response.user)
+      localStorage.setItem('auth_token', currentUser.accessToken)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  function handleFormSubmit(e) {
+    e.preventDefault();
+    login();
   }
 
   return (
     <Container>
-      <Form>
+      <Form onSubmit={handleFormSubmit}>
         <h4>Login</h4>
         
         <FormGroup>
@@ -27,7 +56,7 @@ export function Login() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             type='text'
-            placeholder='Email'
+            placeholder='E-mail'
           />
         </FormGroup>
 
@@ -40,7 +69,12 @@ export function Login() {
           />
         </FormGroup>
 
-        <button onClick={(e) => handleFormSubmit(e)}>Entrar</button>
+        <button 
+          disabled={!isButtonValid} 
+          onClick={(e) => handleFormSubmit(e)}
+        >
+            Entrar
+          </button>
       </Form>  
 
       <p>Não possui conta? <Link to='/sign-up'>Cadastre-se</Link></p>

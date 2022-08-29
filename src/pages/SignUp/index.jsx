@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { Form, Container } from './styles';
@@ -13,6 +13,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { auth, db } from '../../firebase/firebase-config'
 import { collection, addDoc } from 'firebase/firestore'
+import { AuthContext } from '../../contexts/AuthContext';
 
 export function SignUp() {
   const [username, setUsername] = useState('');
@@ -28,6 +29,14 @@ export function SignUp() {
   } = useErrors();
   
   const isButtonValid = errors.length === 0 && username && email && password && confirmPassword;
+
+  const { isAuth, currentUser, setCurrentUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (isAuth) {
+      navigate("/")
+    }
+  }, [])
   
   function handleUsernameInputChange(e) {
     setUsername(e.target.value);
@@ -47,9 +56,10 @@ export function SignUp() {
     }
   }
 
-  async function createNewUser() {
+  async function createNewUser(uid) {
     try {
-      const request = await addDoc(userCollectionRef, { 
+      const request = await addDoc(userCollectionRef, {
+        uid: uid,
         username: username,
         email: email,
         password: password,
@@ -63,18 +73,20 @@ export function SignUp() {
 
   async function signUp() {
     try {
-      const user = await createUserWithEmailAndPassword(
+      const data = await createUserWithEmailAndPassword(
         auth,
         email,
         password,
       );
-      console.log(user);
-      await createNewUser();
+      // console.log(user.user.uid);
+      await createNewUser(data.user.uid);
+      console.log(response);
       toast.success('Cadastro efetuado com sucesso!');
       setTimeout(() => {
         navigate('/login');
       }, 2000);
     } catch (error) {
+      console.log(error)
       toast.error(errorHandler(error.code))
     }
   }
@@ -94,12 +106,12 @@ export function SignUp() {
     signUp();
   }
 
-  console.log(isButtonValid)
-
   return (
     <Container>
 
-      <Toaster />
+      <Toaster styles={{
+        background: '#051E34',
+      }}/>
 
       <Form onSubmit={handleFormSubmit}>
         <h4>Cadastro</h4>

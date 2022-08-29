@@ -19,6 +19,6 @@ module.exports = {
   ],
   rules: {
     'import/prefer-default-export': 0,
-    'linebreak-style': 'LF',
+    'linebreak-style': 'LF'
   },
 };

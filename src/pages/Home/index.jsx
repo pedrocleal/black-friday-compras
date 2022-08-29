@@ -1,5 +1,5 @@
 export function Home() {
   return (
-    null
+    <h1>oi</h1>
   )
 }
