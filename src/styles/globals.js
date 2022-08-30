@@ -9,7 +9,6 @@ export default createGlobalStyle`
   }
   
   body {
-    height: 100vh;
     font-size: 16px;
     display: flex;
     align-items: center;
