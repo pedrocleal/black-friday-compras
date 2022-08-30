@@ -17,7 +17,7 @@ export function Login() {
 
   const isButtonValid = username && password;
 
-  const { isAuth, currentUser, setCurrentUser } = useContext(AuthContext);
+  const { isAuth, setIsAuth, currentUser, setCurrentUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,7 +35,11 @@ export function Login() {
       );
 
       setCurrentUser(response.user)
-      localStorage.setItem('auth_token', currentUser.accessToken)
+      // localStorage.setItem('auth_token', currentUser.accessToken)
+      setIsAuth(true);
+      setTimeout(() => {
+        navigate("/")
+      }, 1000);
     } catch (error) {
       console.log(error)
     }
