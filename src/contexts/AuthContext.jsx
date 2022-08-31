@@ -4,6 +4,7 @@ export const AuthContext = createContext()
 
 export default function AuthProvider({children}) {
 
+  const [loggedId, setLoggedId] = useState(null)
   const [currentUser, setCurrentUser] = useState(null)
   const [isAuth, setIsAuth] = useState(false);
 
@@ -13,7 +14,9 @@ export default function AuthProvider({children}) {
         currentUser,
         setCurrentUser,
         isAuth,
-        setIsAuth
+        setIsAuth,
+        loggedId,
+        setLoggedId,
       }}
     >
       {children}

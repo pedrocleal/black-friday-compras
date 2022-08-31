@@ -80,7 +80,7 @@ export function SignUp() {
       );
       // console.log(user.user.uid);
       await createNewUser(data.user.uid);
-      console.log(response);
+      console.log(data);
       toast.success('Cadastro efetuado com sucesso!');
       setTimeout(() => {
         navigate('/login');

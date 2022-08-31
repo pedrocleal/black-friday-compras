@@ -1,7 +1,20 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 60vw;
+  width: 100%;
+  max-width: 1280px;
+
+  @media (max-width: 1280px) {
+    max-width: 1080px;
+  }
+
+  @media (max-width: 1080px) {
+    max-width: 800px;
+  }
+
+  @media (max-width: 800px) {
+    max-width: 500px;
+  }
   
   display: flex;
   flex-direction: column;
@@ -44,6 +57,10 @@ export const ContainerHeader = styled.div`
     color: #fff;
     font-size: 18px;
     font-weight: 500;
+
+    strong {
+      color: ${({ theme }) => theme.secondary}
+    }
   }
 
   .log-out {

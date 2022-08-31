@@ -17,7 +17,8 @@ export function Login() {
 
   const isButtonValid = username && password;
 
-  const { isAuth, setIsAuth, currentUser, setCurrentUser } = useContext(AuthContext);
+  const { isAuth, setIsAuth, setLoggedId, currentUser, setCurrentUser } = useContext(AuthContext);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,14 +29,14 @@ export function Login() {
 
   async function login() {
     try {
-      const response = await signInWithEmailAndPassword(
+      const { user } = await signInWithEmailAndPassword(
         auth,
         username,
         password
       );
-
-      setCurrentUser(response.user)
-      // localStorage.setItem('auth_token', currentUser.accessToken)
+      
+      setLoggedId(user.uid)
+      localStorage.setItem('auth_token', user.accessToken)
       setIsAuth(true);
       setTimeout(() => {
         navigate("/")

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  margin: auto;
+  margin: 172px auto;
   padding: 24px;
 
   position: relative;
@@ -10,13 +10,10 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   
-  width: 100%;
-  height: 100%;
-
   background: ${({ theme }) => theme.background};
-  border: 1px solid rgba(255, 255, 255, 0.125);
+  /* border: 1px solid rgba(255, 255, 255, 0.125); */
 
-  border-radius: 24px;
+  border-radius: 12px;
   box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
 `
 

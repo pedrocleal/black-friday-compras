@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+  margin: 172px auto;
+
   p {
     margin-top: 16px;
     font-size: 14px;
