@@ -4,20 +4,17 @@ import Input from '../../components/Input';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormGroup } from '../../components/FormGroup'
 
-import { signInWithEmailAndPassword } from "firebase/auth"
-import { auth } from '../../firebase/firebase-config';
-
 import { AuthContext } from '../../contexts/AuthContext';
 import { useEffect } from 'react';
 
 export function Login() {
 
-  const [ username, setUsername ] = useState('')
+  const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
 
-  const isButtonValid = username && password;
+  const isButtonValid = email && password;
 
-  const { isAuth, setIsAuth, setLoggedId, currentUser, setCurrentUser } = useContext(AuthContext);
+  const { isAuth, login } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -27,28 +24,9 @@ export function Login() {
     }
   }, [])
 
-  async function login() {
-    try {
-      const { user } = await signInWithEmailAndPassword(
-        auth,
-        username,
-        password
-      );
-      
-      setLoggedId(user.uid)
-      localStorage.setItem('auth_token', user.accessToken)
-      setIsAuth(true);
-      setTimeout(() => {
-        navigate("/")
-      }, 1000);
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   function handleFormSubmit(e) {
     e.preventDefault();
-    login();
+    login(email, password);
   }
 
   return (
@@ -58,8 +36,8 @@ export function Login() {
         
         <FormGroup>
           <Input 
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             type='text'
             placeholder='E-mail'
           />
